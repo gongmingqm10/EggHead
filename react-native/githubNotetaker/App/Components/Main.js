@@ -1,10 +1,60 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import {
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  TextInput,
+  TouchableHighlight,
+  ActivityIndicatorIOS
+
 } from 'react-native';
+
+class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      isLoading: false,
+      error: false
+    }
+  }
+
+  handleChange(event) {
+    this.setState({
+      username: event.nativeEvent.text
+    })
+  }
+
+  handleSubmit(event) {
+    // Update our indicatorIOS spinner
+    this.setState({
+      isLoading: true
+    });
+    console.log("SUBMIT", this.state.username);
+    // fetch data from github
+    // reroute to the next passing that github information
+  }
+
+  render() {
+    return (
+      <View style={styles.mainContainer}>
+        <Text style={styles.title}>Search for Github User</Text>
+        <TextInput
+          style={styles.searchInput}
+          value={this.state.username}
+          onChange={this.handleChange.bind(this)}
+        />
+        <TouchableHighlight
+          style={styles.button}
+          onPress={this.handleSubmit.bind(this)}
+          underlayColor="white">
+          <Text style={styles.buttonText}>Search</Text>
+        </TouchableHighlight>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -22,10 +72,10 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   searchInput: {
-    height: 30,
-    padding: 4,
+    height: 36,
+    padding: 6,
     marginRight: 5,
-    fontSize: 23,
+    fontSize: 18,
     borderWidth: 1,
     borderColor: 'white',
     borderRadius: 8,
@@ -50,14 +100,5 @@ const styles = StyleSheet.create({
   }
 });
 
-class Main extends Component {
-  render() {
-    return(
-      <View style={styles.mainContainer}>
-        <Text>Testing the Router</Text>
-      </View>
-    );
-  }
-};
 
 module.exports = Main;
