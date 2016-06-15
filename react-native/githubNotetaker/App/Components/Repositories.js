@@ -10,10 +10,17 @@ import {
 
 var Budge = require('./Budge');
 var Separator = require('./Helpers/Separator');
+var Web = require('./Helpers/Web');
 
 class Repositories extends Component {
-  openWebView(event, url) {
-    console.log("Open the WebView", url);
+  openWebView(url) {
+    this.props.navigator.push({
+      title: 'Web View',
+      component: Web,
+      passProps: {
+        html: url
+      }
+    });
   }
 
   render() {
