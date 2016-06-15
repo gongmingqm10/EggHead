@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 var Budge = require('./Budge');
+var Separator = require('./Helpers/Separator');
 
 var styles = StyleSheet.create({
   container: {
@@ -26,7 +27,8 @@ var styles = StyleSheet.create({
   },
   rowContent: {
     fontSize: 19,
-    marginLeft: 5
+    marginLeft: 5,
+    marginTop: 4
   }
 });
 
@@ -48,6 +50,7 @@ class Profile extends React.Component {
             <View style={styles.rowContainer}>
               <Text style={styles.rowTitle}> {this.getRowTitle(item)}</Text>
               <Text style={styles.rowContent}>{userInfo[item]}</Text>
+              <Separator />
             </View>
           </View>
         )
