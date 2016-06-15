@@ -31,7 +31,8 @@ class Main extends Component {
 
   handleSubmit(event) {
     this.setState({
-      isLoading: true
+      isLoading: true,
+      error: false
     });
     api.getBio(this.state.username)
       .then((res) => {
@@ -56,6 +57,12 @@ class Main extends Component {
   }
 
   render() {
+    var showError = (
+      this.state.error ? <Text style={styles.errorText}>{this.state.error}</Text> : <View />
+    );
+    var showLoading = (this.state.isLoading ?
+      <ActivityIndicatorIOS animating={this.state.isLoading} size="large" color="#111" style={styles.indicator} /> : <View/>
+    );
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.title}>Search for Github User</Text>
@@ -70,6 +77,8 @@ class Main extends Component {
           underlayColor="white">
           <Text style={styles.buttonText}>Search</Text>
         </TouchableHighlight>
+        {showLoading}
+        {showError}
       </View>
     );
   }
@@ -116,6 +125,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignSelf: 'stretch',
     justifyContent: 'center'
+  },
+  errorText: {
+    fontSize: 18,
+    color: 'pink',
+    marginTop: 8
+  },
+  indicator: {
+    marginTop: 8
   }
 });
 

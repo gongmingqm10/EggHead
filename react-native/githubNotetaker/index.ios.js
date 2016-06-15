@@ -22,7 +22,7 @@ class githubNotetaker extends Component {
         style={styles.container}
         initialRoute={{
           component: Main,
-          title: 'Github Notetaker'
+          title: 'Notetaker'
         }}
       />
     );
