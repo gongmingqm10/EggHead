@@ -1,10 +1,11 @@
-var React = require('react-native');
-var {
+import React, {Component} from 'react';
+
+import {
   Text,
   View,
   Image,
   StyleSheet
-} = React;
+} from 'react-native';
 
 var styles = StyleSheet.create({
   container: {
@@ -32,12 +33,12 @@ var styles = StyleSheet.create({
   }
 });
 
-class Budge extends React.Component {
+class Budge extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Image style={styles.image} source={{uri: this.props.userInfo.avatar_url}}/>
-        <Text style={styles.name}>{this.props.userInfo.name}></Text>
+        <Text style={styles.name}>{this.props.userInfo.name}</Text>
         <Text style={styles.handle}>{this.props.userInfo.login}</Text>
       </View>
     );
