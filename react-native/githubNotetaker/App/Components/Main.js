@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 var api = require('../Utils/api');
+var Dashboard = require('./Dashboard');
 
 class Main extends Component {
   constructor(props) {
