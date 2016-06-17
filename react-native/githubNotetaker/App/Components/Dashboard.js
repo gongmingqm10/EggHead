@@ -11,6 +11,7 @@ import {
 var Profile = require('./Profile');
 var api = require('../Utils/api');
 var Repositories = require('./Repositories');
+var Notes = require('./Notes');
 
 class Dashboard extends Component {
 
@@ -57,7 +58,16 @@ class Dashboard extends Component {
   }
 
   goToNotes() {
-    console.log('Going to the notes page');
+    api.getNotes(this.props.userInfo.login).then((res) => {
+      this.props.navigator.push({
+        title: 'Notes',
+        component: Notes,
+        passProps: {
+          userInfo: this.props.userInfo,
+          notes: res || {}
+        }
+      });
+    })
   }
 
   render() {
