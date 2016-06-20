@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginTop: (Platform.OS === 'ios') ? 65 : 56
+    marginTop: (Platform.OS === 'ios') ? 0 : 56
   },
   buttonText: {
     fontSize: 18,

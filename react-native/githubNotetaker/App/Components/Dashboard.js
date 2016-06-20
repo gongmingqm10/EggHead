@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   image: {
-    height: 300
+    height: 350
   },
   buttonText: {
     fontSize: 24,

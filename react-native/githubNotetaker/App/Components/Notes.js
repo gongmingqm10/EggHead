@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    marginTop: (Platform.OS === 'ios') ? 65 : 56,
+    marginTop: (Platform.OS === 'ios') ? 0 : 56,
     backgroundColor: 'white'
   },
   button: {
