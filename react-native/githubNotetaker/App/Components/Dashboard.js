@@ -97,7 +97,7 @@ class Dashboard extends Component {
   }
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     marginTop: 65,
     flex: 1
