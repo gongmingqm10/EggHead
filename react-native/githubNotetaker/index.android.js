@@ -4,49 +4,126 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   AppRegistry,
   StyleSheet,
+  TouchableHighlight,
   Text,
-  View
+  Image,
+  View,
+  Navigator
 } from 'react-native';
 
-class githubNotetaker extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
-  }
-}
+import Main from './App/Components/Main';
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#111'
+  },
+  leftNavButtonText: {
+    fontSize: 16,
+    color: 'white'
+  },
+  rightNavButtonText: {
+    fontSize: 16,
+    color: 'white'
+  },
+  title: {
+    fontSize: 18,
+    color: 'white'
+  },
+  navBar: {
+    backgroundColor: '#2979FF',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    justifyContent: 'center'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  backImg: {
+    height: 32,
+    width: 32,
+    margin: 12,
+    resizeMode: 'stretch'
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  titleContainer: {
+    height: 56,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
+  homeMenu: {
+    height: 32,
+    width: 32,
+    margin: 12,
+    resizeMode: 'stretch'
+  },
+  leftNavContainer: {
+    height: 56,
+    width: 56
+  }
 });
+
+class githubNotetaker extends Component {
+  render() {
+    return (
+      <Navigator
+        style={styles.container}
+        initialRoute={{component: Main, title: 'Notetaker', index: 0}}
+        renderScene={this.navigatorRenderScene}
+        configureScene={this.configureScene}
+        navigationBar={
+          <Navigator.NavigationBar
+            routeMapper={NavigationBarRouteMapper}
+            style={styles.navBar}
+          />
+        }
+      />
+    );
+  }
+
+  navigatorRenderScene(route, navigator) {
+    return <route.component navigator={navigator} title={route.title} {...route.passProps}/>
+  }
+
+  configureScene(route, routeStack) {
+    if (route.type === 'Modal') {
+      return Navigator.SceneConfigs.FloatFromBottom;
+    }
+    return Navigator.SceneConfigs.PushFromRight;
+  }
+
+}
+
+var NavigationBarRouteMapper = {
+  LeftButton(route, navigator, index, navState) {
+    if (index === 0) {
+      return (<View>
+        <Image style={styles.backImg} source={require('./images/ic_menu_white_36dp.png')} />
+      </View>);
+    } else {
+      return (<TouchableHighlight
+        style={styles.leftNavContainer}
+        underlayColor="transparent"
+        onPress={() => navigator.pop()}>
+        <Image style={styles.backImg} source={require('./images/ic_arrow_back_white_36dp.png')} />
+      </TouchableHighlight>);
+    }
+  },
+  RightButton(route, navigator, index, navState) {
+    if (route.onPress) {
+      return (
+        <TouchableHighlight
+          onPress={() => route.onPress() }>
+          <Text style={styles.rightNavButtonText}>
+            {route.rightText}
+          </Text>
+        </TouchableHighlight>
+      );
+    }
+  },
+  Title(route, navigator, index, navState) {
+    return <View style={styles.titleContainer}><Text style={styles.title}>{route.title}</Text></View>
+  }
+};
 
 AppRegistry.registerComponent('githubNotetaker', () => githubNotetaker);

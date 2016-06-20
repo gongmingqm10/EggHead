@@ -13,7 +13,7 @@ import {
   NavigatorIOS
 } from 'react-native';
 
-var Main = require('./App/Components/Main');
+var Main = require('./App/Components/Main.js');
 
 class githubNotetaker extends Component {
   render() {

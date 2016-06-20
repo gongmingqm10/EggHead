@@ -5,7 +5,8 @@ import {
   Text,
   StyleSheet,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  Platform
 } from 'react-native';
 
 var Profile = require('./Profile');
@@ -36,6 +37,8 @@ class Dashboard extends Component {
     this.props.navigator.push({
       title: 'Profile Page',
       component: Profile,
+      id: 'profile',
+      index: 2,
       passProps: {userInfo: this.props.userInfo}
     });
   }
@@ -45,6 +48,7 @@ class Dashboard extends Component {
       if (res instanceof Array) {
         this.props.navigator.push({
           title: 'Repositories',
+          index: 3,
           component: Repositories,
           passProps: {
             userInfo: this.props.userInfo,
@@ -62,6 +66,7 @@ class Dashboard extends Component {
       this.props.navigator.push({
         title: 'Notes',
         component: Notes,
+        index: 4,
         passProps: {
           userInfo: this.props.userInfo,
           notes: res || {}
@@ -99,11 +104,11 @@ class Dashboard extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 65,
+    marginTop: (Platform.OS === 'ios') ? 65 : 56,
     flex: 1
   },
   image: {
-    height: 350
+    height: 300
   },
   buttonText: {
     fontSize: 24,

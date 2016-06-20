@@ -3,13 +3,15 @@ import React, {Component} from 'react';
 import {
   View,
   WebView,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F6F6EF'
+    backgroundColor: '#F6F6EF',
+    marginTop: (Platform.OS === 'ios') ? 65 : 56
   }
 });
 

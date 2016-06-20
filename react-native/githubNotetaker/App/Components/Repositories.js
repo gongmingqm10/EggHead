@@ -5,7 +5,8 @@ import {
   Text,
   View,
   TouchableHighlight,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from 'react-native';
 
 var Budge = require('./Budge');
@@ -54,7 +55,9 @@ class Repositories extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'white',
+    marginTop: (Platform.OS === 'ios') ? 65 : 56
   },
   rowContainer: {
     paddingLeft: 8,

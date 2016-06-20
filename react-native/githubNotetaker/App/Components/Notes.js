@@ -7,7 +7,8 @@ import {
   Image,
   ListView,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  Platform
 } from 'react-native';
 
 var api = require('../Utils/api');
@@ -103,7 +104,9 @@ class Notes extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    marginTop: (Platform.OS === 'ios') ? 65 : 56,
+    backgroundColor: 'white'
   },
   button: {
     height: 60,

@@ -6,8 +6,9 @@ import {
   StyleSheet,
   TextInput,
   TouchableHighlight,
-  ActivityIndicatorIOS
-
+  Platform,
+  ActivityIndicatorIOS,
+  ProgressBarAndroid
 } from 'react-native';
 
 var api = require('../Utils/api');
@@ -45,6 +46,7 @@ class Main extends Component {
           this.props.navigator.push({
             title: res.name || 'Select an option',
             component: Dashboard,
+            index: 1,
             passProps: {userInfo: res}
           });
           this.setState({
@@ -56,13 +58,21 @@ class Main extends Component {
       });
   }
 
+  platformProgressBar(){
+    return (Platform.OS === 'android' ?
+      <ProgressBarAndroid color="#111" style={styles.indicator} /> :
+      <ActivityIndicatorIOS animating={true} size="large" color="#111" style={styles.indicator} />);
+  };
+
   render() {
     var showError = (
       this.state.error ? <Text style={styles.errorText}>{this.state.error}</Text> : <View />
     );
-    var showLoading = (this.state.isLoading ?
-      <ActivityIndicatorIOS animating={this.state.isLoading} size="large" color="#111" style={styles.indicator} /> : <View/>
+
+    var showLoading = (
+      this.state.isLoading ? this.platformProgressBar() : <View/>
     );
+
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.title}>Search for Github User</Text>
@@ -87,17 +97,17 @@ class Main extends Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    marginTop: Platform.OS === 'ios' ? 65 : 56,
     padding: 30,
-    marginTop: 65,
     flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: '#48BBEC'
+    backgroundColor: 'white'
   },
   title: {
+    marginTop: 36,
     marginBottom: 20,
     fontSize: 25,
     textAlign: 'center',
-    color: '#fff'
+    color: '#2979FF'
   },
   searchInput: {
     height: 36,
@@ -107,17 +117,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     borderRadius: 8,
-    color: 'white'
+    color: '#111'
   },
   buttonText: {
     fontSize: 18,
-    color: '#111',
+    color: 'white',
     alignSelf: 'center'
   },
   button: {
     height: 45,
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: '#2979FF',
     borderColor: 'white',
     borderWidth: 1,
     borderRadius: 8,
@@ -132,7 +142,7 @@ const styles = StyleSheet.create({
     marginTop: 8
   },
   indicator: {
-    marginTop: 8
+    marginTop: 20
   }
 });
 
