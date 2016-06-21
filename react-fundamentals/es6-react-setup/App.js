@@ -15,7 +15,7 @@ class App extends React.Component {
     this.setState({
       red: this._red.refs.inputSlider.value,
       green: this._green.refs.inputSlider.value,
-      blue: this._blue.refs.inputSlider.value
+      blue: this._blue.refs.inputSlider.valueª
     });
   }
 
@@ -23,11 +23,17 @@ class App extends React.Component {
     return (
       <div>
         <h1> Color Palette </h1>
-        <Slider ref={(ref) => this._red  = ref} txt={this.state.red} update={this.update} />
+        <Slider ref={(ref) => this._red  = ref} txt={this.state.red} update={this.update}/>
         <br/>
-        <Slider ref={(ref) => this._green  = ref} txt={this.state.green} update={this.update} />
+        <Slider ref={(ref) => this._green  = ref} txt={this.state.green} update={this.update}/>
         <br/>
-        <Slider ref={(ref) => this._blue  = ref} txt={this.state.blue} update={this.update} />
+        <Slider ref={(ref) => this._blue  = ref} txt={this.state.blue} update={this.update}/>
+        <br />
+        <Button>
+          <h3>Title in Button</h3>
+          <p>Description of Button</p>
+        </Button>
+
       </div>
     );
   }
@@ -35,10 +41,21 @@ class App extends React.Component {
 
 class Slider extends React.Component {
   render() {
-    return(
+    return (
       <div>
-        <input ref="inputSlider" type="range" min="0" max="255" onChange={this.props.update} />
+        <input ref="inputSlider" type="range" min="0" max="255" onChange={this.props.update}/>
         <span> {this.props.txt}</span>
+      </div>
+    )
+  }
+}
+
+class Button extends React.Component {
+  render() {
+    return (
+      <div>
+        <p>Below is the detail title and description: </p>
+        {this.props.children}
       </div>
     )
   }
