@@ -15,7 +15,7 @@ class App extends React.Component {
     this.setState({
       red: this._red.refs.inputSlider.value,
       green: this._green.refs.inputSlider.value,
-      blue: this._blue.refs.inputSlider.valueª
+      blue: this._blue.refs.inputSlider.value
     });
   }
 
@@ -64,10 +64,10 @@ class Button extends React.Component {
 App.propTypes = {
   txt: React.PropTypes.string,
   cat: React.PropTypes.number.isRequired
-}
+};
 
 App.defaultProps = {
   txt: 'gongmingqm10'
-}
+};
 
 export default App
