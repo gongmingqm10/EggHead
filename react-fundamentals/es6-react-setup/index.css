@@ -1,0 +1,22 @@
+
+.jsx-inner-container {
+    display: flex;
+}
+
+header {
+    margin-bottom: 18px;
+    background-color: pink;
+    color: red;
+    padding: 10px;
+    min-height: 48px;
+}
+
+textarea {
+    width: 50%;
+    height: 200px;
+}
+
+pre{
+    width: 50%;
+    display: inline-flex;
+}
