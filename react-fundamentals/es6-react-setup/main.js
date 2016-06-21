@@ -5,6 +5,7 @@ import Wrapper from './Wrapper';
 import WrapperUpdater from './WrapperUpdater';
 import AppMixin from './AppMixin';
 import NumberApp from './NumberApp';
+import PersonApp from './PersonApp';
 
 ReactDOM.render(<App txt="Ming Gong" cat={5}/>, document.getElementById('app'));
 
@@ -15,3 +16,5 @@ ReactDOM.render(<WrapperUpdater val={0} />, document.getElementById('wrapperUpda
 ReactDOM.render(<AppMixin />, document.getElementById('appMixin'));
 
 ReactDOM.render(<NumberApp />, document.getElementById('numberApp'));
+
+ReactDOM.render(<PersonApp />, document.getElementById('personApp'));
