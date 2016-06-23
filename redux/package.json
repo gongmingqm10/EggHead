@@ -1,5 +1,5 @@
 {
-  "name": "redux",
+  "name": "redux-demo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "react": "^15.1.0",
-    "react-dom": "^15.1.0"
+    "react-dom": "^15.1.0",
+    "redux": "^3.5.2"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
