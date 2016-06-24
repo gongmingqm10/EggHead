@@ -1,18 +1,30 @@
 import deepFreeze from 'deep-freeze';
 import expect from 'expect';
 
-const todos = (state = [], action) => {
+const todo = (state, action) => {
   switch(action.type) {
     case 'ADD_TODO':
-      return [...state, {
+      return {
           id: action.id,
           text: action.text,
           completed: false
-      }];
+      };
     case 'TOGGLE_TODO':
-      return state.map(todo => {
-        return Object.assign({}, todo, action.id === todo.id ? {completed: !todo.completed} : {});
-      });
+      return Object.assign(
+        {},
+        state,
+        action.id === state.id ? {completed: !state.completed} : {});
+    default:
+      return state;
+  }
+}
+
+const todos = (state = [], action) => {
+  switch(action.type) {
+    case 'ADD_TODO':
+      return [...state, todo({}, action)];
+    case 'TOGGLE_TODO':
+      return state.map(item => todo(item, action));
     default:
       return state;
   }
