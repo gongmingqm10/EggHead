@@ -1,6 +1,6 @@
 import deepFreeze from 'deep-freeze';
 import expect from 'expect';
-import Redux, {createStore} from 'redux';
+import Redux, {createStore, combineReducers} from 'redux';
 
 const todo = (state, action) => {
   switch(action.type) {
@@ -40,12 +40,13 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
   }
 }
 
-const todoApp = (state = {}, action) => {
-  return {
-    todos: todos(state.todos, action),
-    visibilityFilter: visibilityFilter(state.visibilityFilter, action)
-  }
-};
+// const todoApp = (state = {}, action) => {
+//   return {
+//     todos: todos(state.todos, action),
+//     visibilityFilter: visibilityFilter(state.visibilityFilter, action)
+//   }
+// };
+const todoApp = combineReducers({todos, visibilityFilter});
 
 // begin to use the redux and dispatch actions
 const store = createStore(todoApp);
