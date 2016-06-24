@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 // import {createStore} from 'redux';
 
-// ReactDOM.render(<App />, document.getElementById('app'));
-
 const counter = (state = 0, action) => {
   switch(action.type) {
     case 'INCREMENT':
@@ -44,17 +42,15 @@ const store = createStore(counter);
 // This is the callback for store
 // whenver there is an dispatcher event.
 const render = () => {
-  document.body.innerText = store.getState();
-  if (store.getState() === 10) {
-    // Unsubscribe!!
-    subsciption();
-  }
+  ReactDOM.render(
+    <App value={store.getState()}
+        onIncrement={() => store.dispatch({type: 'INCREMENT'})}
+        onDecrement={() => store.dispatch({type: 'DECREMENT'})}
+    />,
+    document.getElementById('app')
+  );
 };
 
 var subsciption = store.subscribe(render);
 
 render();
-
-document.addEventListener('click', () => {
-  store.dispatch({type: 'INCREMENT'});
-});

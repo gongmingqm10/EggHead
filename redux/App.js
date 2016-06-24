@@ -7,7 +7,12 @@ class App extends React.Component {
 
   render() {
     return(
-      <h1>Hello Redux</h1>
+      <div>
+        <h1>Hello Redux</h1>
+        <h2>{this.props.value}</h2>
+        <button onClick={this.props.onIncrement}> + </button>
+        <button onClick={this.props.onDecrement}> - </button>
+      </div>
     )
   }
 
