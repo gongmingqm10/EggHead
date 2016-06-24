@@ -20,6 +20,11 @@ const incrementCounter = (list, index) => {
   ]
 };
 
+const toggleTodo = (todo) => {
+  return Object.assign({}, todo, {completed: !todo.completed});
+}
+
+// Below is add the tests!!!!
 const testAddCounter = () => {
   const listBefore = [];
   const listAfter = [0];
@@ -43,8 +48,25 @@ const testIncrementCounter = () => {
   expect(incrementCounter(listBefore, 1)).toEqual(listAfter);
 };
 
+const testToggleTodo = () => {
+  const todoBefore = {
+    id: 0,
+    text: 'Learn Redux',
+    completed: false
+  };
+  const todoAfter = {
+    id: 0,
+    text: 'Learn Redux',
+    completed: true
+  };
+  deepFreeze(todoBefore);
+
+  expect(toggleTodo(todoBefore)).toEqual(todoAfter);
+};
+
 testAddCounter();
 testRemoveCounter();
 testIncrementCounter();
+testToggleTodo();
 
 console.log('All tests passed');
