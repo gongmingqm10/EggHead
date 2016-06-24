@@ -22,7 +22,7 @@ const createStore = (render) => {
 
   const getState = () => state;
 
-  const   = (action) => {
+  const dispatch = (action) => {
     state = render(state, action);
     listeners.forEach(listener => listener());
   };
