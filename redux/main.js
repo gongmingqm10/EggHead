@@ -49,11 +49,19 @@ let nextTodoId = 0;
 const render = () => {
   ReactDOM.render(
     <TodoApp
-      value={store.getState()}
+      {...store.getState()}
       onAddTodo = {(text) => store.dispatch({
         type: 'ADD_TODO',
         text: text,
         id: nextTodoId++
+      })}
+      onToggleTodo = { id => store.dispatch({
+        type: 'TOGGLE_TODO',
+        id: id
+      })}
+      onVisibilityFilter = { filter => store.dispatch({
+        type: 'SET_VISIBILITY_FILTER',
+        filter: filter
       })}
     />,
     document.getElementById('app')
