@@ -1,56 +1,65 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-// import {createStore} from 'redux';
+import TodoApp from './TodoApp';
+import Redux, {createStore, combineReducers} from 'redux';
 
-const counter = (state = 0, action) => {
+const todo = (state, action) => {
   switch(action.type) {
-    case 'INCREMENT':
-      return state + 1;
-    case 'DECREMENT':
-      return state - 1;
+    case 'ADD_TODO':
+      return {
+          id: action.id,
+          text: action.text,
+          completed: false
+      };
+    case 'TOGGLE_TODO':
+      return Object.assign(
+        {},
+        state,
+        action.id === state.id ? {completed: !state.completed} : {});
     default:
       return state;
   }
 }
 
-const createStore = (render) => {
-  let state;
-  let listeners = [];
-
-  const getState = () => state;
-
-  const dispatch = (action) => {
-    state = render(state, action);
-    listeners.forEach(listener => listener());
-  };
-
-  const subscribe = (listener) => {
-    listeners.push(listener);
-    return () => {
-      listeners = listeners.filter(l => l !== listener);
-    }
-  };
-
-  dispatch({});
-
-  return {getState, dispatch, subscribe};
-}
-
-const store = createStore(counter);
-
-// This is the callback for store
-// whenver there is an dispatcher event.
-const render = () => {
-  ReactDOM.render(
-    <App value={store.getState()}
-        onIncrement={() => store.dispatch({type: 'INCREMENT'})}
-        onDecrement={() => store.dispatch({type: 'DECREMENT'})}
-    />,
-    document.getElementById('app')
-  );
+const todos = (state = [], action) => {
+  switch(action.type) {
+    case 'ADD_TODO':
+      return [...state, todo({}, action)];
+    case 'TOGGLE_TODO':
+      return state.map(item => todo(item, action));
+    default:
+      return state;
+  }
 };
 
-var subsciption = store.subscribe(render);
+const visibilityFilter = (state = 'SHOW_ALL', action) => {
+  switch (action.type) {
+    case 'SET_VISIBILITY_FILTER':
+      return action.filter;
+    default:
+      return state;
+  }
+}
+
+const todoApp = combineReducers({todos, visibilityFilter});
+const store = createStore(todoApp);
+
+let nextTodoId = 0;
+
+const render = () => {
+  ReactDOM.render(
+    <TodoApp
+      value={store.getState()}
+      onAddTodo = {(text) => store.dispatch({
+        type: 'ADD_TODO',
+        text: text,
+        id: nextTodoId++
+      })}
+    />,
+    document.getElementById('app')
+  )
+}
+
+store.subscribe(render);
 
 render();
