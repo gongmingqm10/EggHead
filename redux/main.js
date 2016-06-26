@@ -50,18 +50,18 @@ const render = () => {
   ReactDOM.render(
     <TodoApp
       {...store.getState()}
-      onAddTodo = {(text) => store.dispatch({
+      onAddTodo = { text => store.dispatch({
         type: 'ADD_TODO',
-        text: text,
+        text,
         id: nextTodoId++
       })}
       onToggleTodo = { id => store.dispatch({
         type: 'TOGGLE_TODO',
-        id: id
+        id
       })}
       onVisibilityFilter = { filter => store.dispatch({
         type: 'SET_VISIBILITY_FILTER',
-        filter: filter
+        filter
       })}
     />,
     document.getElementById('app')

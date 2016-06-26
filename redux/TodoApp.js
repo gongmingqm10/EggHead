@@ -50,21 +50,24 @@ const FilterItem = ({selected, onClick, text}) => (
   </span>
 );
 
+const AddTodo = ({onAddTodo}) => {
+  let input;
+  return (
+    <div>
+      <input type="text" ref={(node) => input = node} />
+      <button
+        style={styles.button}
+        onClick={() => {
+          onAddTodo(input.value);
+          input.value = '';
+        }}>
+        Add Todo
+      </button>
+    </div>
+  );
+};
+
 class TodoApp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.addTodo = this.addTodo.bind(this);
-  }
-
-  addTodo() {
-    const todoInput = this.refs.todoInput;
-    let todoText = todoInput.value;
-    if (todoText) {
-      this.props.onAddTodo(todoText);
-      todoInput.value = "";
-    }
-  }
-
   getVisibleTodos(todos, filter) {
     switch(filter) {
       case 'SHOW_ALL':
@@ -79,34 +82,13 @@ class TodoApp extends React.Component {
   };
 
   render() {
-    const filters = [
-      {text: 'All', filter: 'SHOW_ALL'},
-      {text: 'Completed', filter: 'SHOW_COMPLETED'},
-      {text: 'Active', filter: 'SHOW_UNCOMPLETED'}
-    ];
-
-    const filterView = filters.map(item => {
-      let isCurrentFilter = this.props.visibilityFilter === item.filter ;
-      return (
-        <span
-          style={{
-            cursor: 'pointer',
-            marginRight: 8,
-            textDecoration: isCurrentFilter ? 'underline':'none',
-            color: isCurrentFilter ? 'blue': 'black'}}
-          key={item.filter}
-          onClick={this.props.onVisibilityFilter.bind(this, item.filter)}>
-          {item.text}
-        </span>
-      )
-    });
-
     return (
       <div style={styles.todoContainer}>
-        <div>
-          <input type="text" ref="todoInput"/>
-          <button style={styles.button} onClick={this.addTodo}>Add Todo</button>
-        </div>
+        <AddTodo onAddTodo={ text => {
+          if (text) {
+            this.props.onAddTodo(text);
+          }
+        }}/>
 
         <TodoList
           onToggleTodo = {this.props.onToggleTodo}
