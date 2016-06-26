@@ -7,65 +7,48 @@ const filters = [
   {text: 'Active', filter: 'SHOW_UNCOMPLETED'}
 ];
 
-class Todo extends React.Component {
-  render() {
-    return(
-      <li onClick={this.props.onClick}
-        style={{cursor: 'pointer', textDecoration: this.props.completed ? 'line-through' : 'none'}}
-        >
-        {this.props.text}
-      </li>
-    )
-  }
-}
+const TodoList = ({todos, onToggleTodo}) => (
+  <ul style={styles.todoList}>
+    {todos.map(todo =>
+      <Todo
+        key={todo.id}
+        onClick={onToggleTodo.bind(this, todo.id)}
+        {...todo}
+        />
+    )}
+  </ul>
+);
 
-class TodoList extends React.Component {
-  render() {
-    return (
-      <ul style={styles.todoList}>
-        {this.props.todos.map(todo =>
-          <Todo
-            key={todo.id}
-            onClick={this.props.onToggleTodo.bind(this, todo.id)}
-            {...todo}
-            />
-        )}
-      </ul>
-    )
-  }
-}
+const Todo = ({onClick, completed, text}) => (
+  <li onClick={onClick}
+    style={{cursor: 'pointer', textDecoration: completed ? 'line-through' : 'none'}} >
+    {text}
+  </li>
+);
 
-class FilterView extends React.Component {
-  render() {
-    return (
-      <div style={styles.filterContainer}>
-        Show: {filters.map(item =>
-          <FilterItem
-            {...item}
-            key={item.filter}
-            onClick={this.props.onVisibilityFilter.bind(this, item.filter)}
-            selected={this.props.visibilityFilter === item.filter} />
-        )}
-      </div>
-    )
-  }
-}
+const FilterView = ({onVisibilityFilter, visibilityFilter}) => (
+  <div style={styles.filterContainer}>
+    Show: {filters.map(item =>
+      <FilterItem
+        {...item}
+        key={item.filter}
+        onClick={onVisibilityFilter.bind(this, item.filter)}
+        selected={visibilityFilter === item.filter} />
+    )}
+  </div>
+);
 
-class FilterItem extends React.Component {
-  render() {
-    return (
-      <span
-        style={{
-          cursor: 'pointer',
-          marginRight: 8,
-          textDecoration: this.props.selected ? 'underline':'none',
-          color: this.props.selected ? 'blue': 'black'}}
-        onClick={this.props.onClick}>
-        {this.props.text}
-      </span>
-    )
-  }
-}
+const FilterItem = ({selected, onClick, text}) => (
+  <span
+    style={{
+      cursor: 'pointer',
+      marginRight: 8,
+      textDecoration: selected ? 'underline':'none',
+      color: selected ? 'blue': 'black'}}
+    onClick={onClick}>
+    {text}
+  </span>
+);
 
 class TodoApp extends React.Component {
   constructor(props) {
