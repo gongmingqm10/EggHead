@@ -44,30 +44,7 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
 const todoApp = combineReducers({todos, visibilityFilter});
 const store = createStore(todoApp);
 
-let nextTodoId = 0;
-
-const render = () => {
-  ReactDOM.render(
-    <TodoApp
-      {...store.getState()}
-      onAddTodo = { text => store.dispatch({
-        type: 'ADD_TODO',
-        text,
-        id: nextTodoId++
-      })}
-      onToggleTodo = { id => store.dispatch({
-        type: 'TOGGLE_TODO',
-        id
-      })}
-      onVisibilityFilter = { filter => store.dispatch({
-        type: 'SET_VISIBILITY_FILTER',
-        filter
-      })}
-    />,
-    document.getElementById('app')
-  )
-}
-
-store.subscribe(render);
-
-render();
+// The new refactor
+ReactDOM.render(<TodoApp store={createStore(todoApp)} />,
+  document.getElementById('app')
+);
