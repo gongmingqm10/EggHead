@@ -145,25 +145,12 @@ Footer.contextTypes = {
   store: React.PropTypes.object
 };
 
-class TodoApp extends React.Component {
-  getChildContext() {
-    return {
-      store: this.props.store
-    }
-  }
-  render() {
-    return (
-      <div style={styles.todoContainer}>
-        <AddTodo />
-        <TodoList />
-        <Footer />
-      </div>
-    )
-  }
-}
-
-TodoApp.childContextTypes = {
-  store: React.PropTypes.object
-};
+const TodoApp = () => (
+  <div style={styles.todoContainer}>
+    <AddTodo />
+    <TodoList />
+    <Footer />
+  </div>
+);
 
 export default TodoApp;

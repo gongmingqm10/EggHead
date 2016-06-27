@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TodoApp from './TodoApp';
 import Redux, {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
 
 const todo = (state, action) => {
   switch(action.type) {
@@ -45,6 +46,9 @@ const todoApp = combineReducers({todos, visibilityFilter});
 const store = createStore(todoApp);
 
 // The new refactor
-ReactDOM.render(<TodoApp store={createStore(todoApp)} />,
+ReactDOM.render(
+  <Provider store={createStore(todoApp)}>
+    <TodoApp />
+  </Provider>,
   document.getElementById('app')
 );
