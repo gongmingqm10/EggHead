@@ -51,14 +51,14 @@ const FilterItem = ({selected, onClick, text}) => (
     style={{
       cursor: 'pointer',
       marginRight: 8,
-      textDecoration: selected ? 'underline':'none',
-      color: selected ? 'blue': 'black'}}
+      textDecoration: selected ? 'none':'underline',
+      color: selected ? 'black':'blue'}}
     onClick={onClick} >
     {text}
   </span>
 );
 
-const AddTodo = ({store}) => {
+const AddTodo = (props, {store}) => {
   let input;
   return (
     <div>
@@ -81,9 +81,13 @@ const AddTodo = ({store}) => {
   );
 };
 
+AddTodo.contextTypes = {
+  store: React.PropTypes.object
+};
+
 class TodoList extends React.Component {
   componentDidMount() {
-    const {store} = this.props;
+    const {store} = this.context;
     this.unsubscribe = store.subscribe(() => this.forceUpdate());
   }
   componentWillUnmount() {
@@ -91,8 +95,8 @@ class TodoList extends React.Component {
   }
 
   render() {
-    let store = this.props.store;
-    let state = store.getState();
+    const {store} = this.context;
+    const state = store.getState();
     return (
       <ul style={styles.todoList}>
         {getVisibleTodos(state.todos, state.visibilityFilter).map(todo =>
@@ -107,17 +111,21 @@ class TodoList extends React.Component {
   }
 }
 
+TodoList.contextTypes = {
+  store: React.PropTypes.object
+}
+
 class Footer extends React.Component {
   componentDidMount() {
-    const {store} = this.props;
+    const {store} = this.context;
     this.unsubscribe = store.subscribe(() => this.forceUpdate());
   }
   componentWillUnmount() {
     this.unsubscribe();
   }
   render() {
-    let store = this.props.store;
-    let {visibilityFilter} = store.getState();
+    const {store} = this.context;
+    const {visibilityFilter} = store.getState();
     return (
       <div style={styles.filterContainer}>
         Show: {filters.map(item =>
@@ -133,12 +141,29 @@ class Footer extends React.Component {
   }
 }
 
-const TodoApp = ({store}) => (
-  <div style={styles.todoContainer}>
-    <AddTodo store={store} />
-    <TodoList store={store} />
-    <Footer store={store} />
-  </div>
-);
+Footer.contextTypes = {
+  store: React.PropTypes.object
+};
+
+class TodoApp extends React.Component {
+  getChildContext() {
+    return {
+      store: this.props.store
+    }
+  }
+  render() {
+    return (
+      <div style={styles.todoContainer}>
+        <AddTodo />
+        <TodoList />
+        <Footer />
+      </div>
+    )
+  }
+}
+
+TodoApp.childContextTypes = {
+  store: React.PropTypes.object
+};
 
 export default TodoApp;
