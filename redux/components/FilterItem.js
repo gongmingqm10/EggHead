@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 const FilterItem = ({selected, onClick, text}) => (
   <span
@@ -11,5 +11,11 @@ const FilterItem = ({selected, onClick, text}) => (
     {text}
   </span>
 );
+
+FilterItem.propTypes = {
+  selected: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  text: PropTypes.func.isRequired
+};
 
 export default FilterItem;
